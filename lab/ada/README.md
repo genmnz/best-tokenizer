@@ -22,9 +22,10 @@ encode speed, equal memory, lossless.**
 |---|---|
 | `ada_tokenizer.py` | `AdaTokenizer` + `AdaConfig` (every knob is a config field, rule 10) |
 | `corpus.py` | synthetic multi-domain corpus generator (no downloads, rule 11) |
+| `ada_data.py` | real-dataset loader (streams FineWeb-Edu / FineWeb-2 / code) + synthetic fallback |
 | `bench.py` | equal-footing ablation benchmark → `bench_results.json` |
 | `test_ada.py` | test suite (pytest **or** `python3 test_ada.py`) |
-| `ada_colab_train.ipynb` | v1 neural upgrade, trained on Colab (rule 11) |
+| `ada_train.ipynb` | **Colab: train on a real dataset** — v0 tokenizer + ablation, then v1 neural |
 
 ## Run
 

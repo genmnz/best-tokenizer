@@ -32,7 +32,7 @@ small, fast, CPU-first design. Named for Ada Lovelace. One model, not an ensembl
 - **v1 (Colab, later):** a tiny neural front-end — an H-Net-style differentiable router over
   byte embeddings with an FSQ bottleneck and an MrT5 mid-network deletion gate — trained on
   Colab, brought back as a checkpoint and benchmarked here. Ships as
-  `lab/ada/ada_colab_train.ipynb` (self-contained, one config cell). v0's entropy-guard is the
+  `lab/ada/ada_train.ipynb` (self-contained, one config cell). v0's entropy-guard is the
   ablation baseline the neural router must beat.
 
 ## Success criteria (must hold together)

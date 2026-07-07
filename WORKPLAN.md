@@ -30,7 +30,7 @@ Evaluated work order. Follow it; skipping ahead requires a note in FINDINGS.
       a venv is available; confirm our from-scratch BPE matches it within tolerance.
 
 ## Phase 4 — Ada v1 neural (Colab)
-- [ ] Run `lab/ada/ada_colab_train.ipynb` on Colab: H-Net router + FSQ bottleneck + MrT5 gate.
+- [ ] Run `lab/ada/ada_train.ipynb` on Colab: H-Net router + FSQ bottleneck + MrT5 gate.
 - [ ] Bring back checkpoint + report → `lab/ada/COLAB_RUNS.md` (newest first, verdict + next tweak).
 - [ ] Ablate each neural donor; keep only what beats v0's bits-per-byte / bytes-per-token.
 - [ ] Freshness re-sweep (rule 12) before the run: "what changed since 2026-07-07?" for each axis.

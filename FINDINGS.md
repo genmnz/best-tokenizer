@@ -208,4 +208,45 @@ guard** — a pure-stdlib tokenizer that beats plain BPE by ~43% compression at 
 equal speed, equal memory, and full losslessness. It reproduces SuperBPE's headline result
 without SuperBPE's Rust fork, and folds in BLT's boundary principle as a CPU-only corpus
 statistic. The neural donors (H-Net router, MrT5 gate, FSQ bottleneck) are the v1 upgrade
-(`lab/ada/ada_colab_train.ipynb`) that must beat this v0 baseline in ablation to earn inclusion.
+(`lab/ada/ada_train.ipynb`) that must beat this v0 baseline in ablation to earn inclusion.
+
+---
+
+## 6. Does Ada need a dataset? (answered 2026-07-07)
+
+Yes — **raw text, no labels.** A tokenizer is trained *unsupervised*: it learns merge rules
+(v0) or byte-boundary weights (v1) purely from the statistics of a text corpus. There is no
+annotation step. The synthetic `corpus.py` here is only a stand-in to honor "no downloads on
+this box" (rule 11); on Colab the training notebook streams a real corpus. Corpus quality and
+domain coverage directly set tokenizer quality, so the corpus choice below is load-bearing.
+
+## 7. (reserved)
+
+## 8. Component sweeps (rule 13 — dated, re-verify at 30 days)
+
+### Sweep 2026-07-07 — training corpus for Ada
+Query themes: best open web pretraining corpus 2026; multilingual FineWeb-2 vs CulturaX; code
+dataset The Stack v2 streaming. Winners (all HuggingFace, streaming, permissive licenses):
+- **`HuggingFaceFW/fineweb-edu`** (`sample-10BT`) — English, classifier-quality-filtered web;
+  the current default-best small-model corpus (SmolLM2 lineage). ODC-By. **Default.**
+- **`HuggingFaceFW/fineweb-2`** — 8 TB, ~3T words, 1000+ languages / 1893 language-script pairs;
+  beats CC-100, mC4, CulturaX, HPLT on the multilingual eval suite. ODC-By. Use per-script
+  configs (`arb_Arab`, `zho_Hans`, `fra_Latn`, …) to stress byte-level multilingual robustness.
+- **`bigcode/the-stack-smol`** — content-bearing source-code sample, 600+ languages. (NB the
+  full `the-stack-v2-train-full-ids` ships only file *IDs* → needs Software Heritage S3 creds;
+  the smol/`the-stack-dedup` variants stream actual content — a gotcha, logged in §10.)
+- **Recipe for a byte tokenizer:** MIX English + code + one non-Latin script — that is exactly
+  where byte-level tokenization beats subword BPE, so it is the honest stress test for Ada.
+
+Wired into `lab/ada/ada_data.py` (`REGISTRY` + `DataConfig.mix`) and `lab/ada/ada_train.ipynb`.
+Dated links: FineWeb (arXiv:2406.17557), FineWeb-2 (arXiv:2506.20920), StarCoder2/Stack v2
+(arXiv:2402.19173), SmolLM2 data recipe (arXiv:2502.02737).
+
+## 10. Stack & gotcha ledger (rule 14)
+
+- **2026-07-07 — The Stack v2 `-train-full-ids` has no content.** It stores Software-Heritage
+  blob IDs, not source; fetching text needs SWH S3 credentials. For streaming *content* use
+  `bigcode/the-stack-smol` or `bigcode/the-stack-dedup`. Ada's loader defaults to `the-stack-smol`.
+- **2026-07-07 — this container has no `datasets`/`numpy`/`torch`.** Real-corpus training and all
+  v1 work happen on Colab; `ada_data.load_hf_corpus` imports `datasets` lazily so the module
+  still imports here for the synthetic path.
