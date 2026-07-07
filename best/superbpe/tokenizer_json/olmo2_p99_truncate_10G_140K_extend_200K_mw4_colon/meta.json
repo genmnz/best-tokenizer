@@ -1,0 +1,16 @@
+{
+     "total_bytes": 10000000000,
+     "train_files": [
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/48.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/61.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/66.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/25.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/6.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/58.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/51.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/75.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/80.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/32.txt",
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2_p99_truncate/train/70_truncated_557641266.txt"
+     ]
+}

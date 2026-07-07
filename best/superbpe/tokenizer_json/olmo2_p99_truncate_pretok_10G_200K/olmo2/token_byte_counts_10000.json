@@ -1,0 +1,7 @@
+{
+     "test_files": [
+          "/gscratch/xlab/alisaliu/pretokenization/data/olmo2/eval/135_truncated_1000000000.txt"
+     ],
+     "token_count": 270062340,
+     "byte_count": 1000000000
+}

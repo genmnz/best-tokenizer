@@ -1,8 +1,7 @@
-# Research pool — reproduced via scripts/fetch_pool.sh (not committed: 433MB repos + 20MB PDFs).
-best/
-papers/
+# best/ and papers/ ARE committed (unified into this single repo; nested .git dirs stripped).
+# Reproduce/refresh them with scripts/fetch_pool.sh if needed.
 
-# Caches (bench_results.json IS committed as evidence — not ignored)
+# Caches only
 **/__pycache__/
 *.pyc
 lab/**/ada.json
