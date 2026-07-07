@@ -242,11 +242,41 @@ Wired into `lab/ada/ada_data.py` (`REGISTRY` + `DataConfig.mix`) and `lab/ada/ad
 Dated links: FineWeb (arXiv:2406.17557), FineWeb-2 (arXiv:2506.20920), StarCoder2/Stack v2
 (arXiv:2402.19173), SmolLM2 data recipe (arXiv:2502.02737).
 
+### Sweep 2026-07-07b — go aggressive + fix the gated-dataset crash
+User hit `DatasetNotFoundError: bigcode/the-stack-smol is a gated dataset ... must be authenticated`.
+Re-swept for the *highest-quality, most-recent, and crucially UN-gated* corpora, and rebuilt the
+loader into a quality-tiered registry + resilient blender (`ada_data.py`, `SOURCES`/`RECIPES`):
+- **Code (the fix):** `bigcode/the-stack-smol`, `-dedup`, `starcoderdata`, and Stack-v2 are all
+  gated. **`codeparrot/github-code-clean`** (and `github-code`) are **ungated**, streaming, field
+  `code`, 30+ languages — now Ada's default code source. (The `default` recipe no longer touches
+  any gated dataset.)
+- **Premium English web added:** `mlfoundations/dclm-baseline-1.0-parquet` (DCLM, 3.8T, highest
+  macro-avg baseline); `nvidia/Nemotron-CC-HQ` (+5.6 MMLU vs DCLM, **gated → HF_TOKEN**);
+  `openbmb/Ultra-FineWeb` (verified re-filter of FineWeb, arXiv:2505.05427); `ontocord/MixtureVitae`
+  (permissive-first + reasoning, arXiv:2509.25531).
+- **Math/reasoning added:** `HuggingFaceFW/finemath` (finemath-4plus/3plus), `open-web-math`,
+  `nvidia/Nemotron-CC-Math` (133B tokens, beats FineMath, arXiv:2508.15096, **gated**).
+- **Knowledge added:** `wikimedia/wikipedia` (`20231101.en`), Stack-Exchange.
+- **Resilience:** each source tries several candidate configs + text-field names; gated/missing/
+  errored sources are warned-and-skipped, and an empty result falls back to synthetic. So a gated
+  dataset can never again crash a run. Gated sources auto-skip unless `HF_TOKEN` is set.
+- **Recipes:** `default` (all-ungated blend: edu+code+multilingual+math+wiki), `aggressive`
+  (adds DCLM/Ultra-FineWeb/premium), `multilingual`, `code-heavy`, `english`.
+- Quality gates in the loader: min/max line length, exact-line dedup (blake2b), `min_alnum_frac`
+  to drop markup/punctuation noise, shuffle.
+Dated links: DCLM (arXiv:2406.11794), Nemotron-CC (developer.nvidia.com/blog/announcing-nemotron-cc),
+Ultra-FineWeb (arXiv:2505.05427), MixtureVitae (arXiv:2509.25531), Nemotron-CC-Math (arXiv:2508.15096).
+
 ## 10. Stack & gotcha ledger (rule 14)
 
 - **2026-07-07 — The Stack v2 `-train-full-ids` has no content.** It stores Software-Heritage
-  blob IDs, not source; fetching text needs SWH S3 credentials. For streaming *content* use
-  `bigcode/the-stack-smol` or `bigcode/the-stack-dedup`. Ada's loader defaults to `the-stack-smol`.
+  blob IDs, not source; fetching text needs SWH S3 credentials.
+- **2026-07-07 — the whole `bigcode/` code line is GATED** (`the-stack`, `the-stack-smol`,
+  `the-stack-dedup`, `starcoderdata`, Stack-v2): `DatasetNotFoundError: ... is a gated dataset ...
+  must be authenticated`. **Fix:** use ungated `codeparrot/github-code-clean` (field `code`).
+  Ada's loader now defaults to it and marks every gated source `needs_token`, auto-skipping unless
+  `HF_TOKEN` is set. General rule: never let a single dataset be load-bearing — the loader tries
+  candidate configs/fields and skips on any error.
 - **2026-07-07 — this container has no `datasets`/`numpy`/`torch`.** Real-corpus training and all
   v1 work happen on Colab; `ada_data.load_hf_corpus` imports `datasets` lazily so the module
   still imports here for the synthetic path.
