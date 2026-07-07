@@ -1,0 +1,60 @@
+{
+  "vocab_size": 1024,
+  "n_lines": 6000,
+  "seed": 0,
+  "results": {
+    "raw-bytes": {
+      "vocab": 256,
+      "train_s": 0.0,
+      "merges": 0,
+      "bytes_per_token": 1.0,
+      "tokens_per_1k_bytes": 1000.0,
+      "encode_MB_per_s": null,
+      "lossless": true
+    },
+    "bpe-baseline": {
+      "bytes": 58039,
+      "tokens": 11759,
+      "bytes_per_token": 4.9357,
+      "tokens_per_1k_bytes": 202.61,
+      "encode_MB_per_s": 1.23,
+      "lossless": true,
+      "vocab": 1024,
+      "train_s": 5.01,
+      "merges": 768
+    },
+    "+superword": {
+      "bytes": 58039,
+      "tokens": 8201,
+      "bytes_per_token": 7.0771,
+      "tokens_per_1k_bytes": 141.3,
+      "encode_MB_per_s": 1.223,
+      "lossless": true,
+      "vocab": 1024,
+      "train_s": 7.73,
+      "merges": 768
+    },
+    "+superword+entropy": {
+      "bytes": 58039,
+      "tokens": 8191,
+      "bytes_per_token": 7.0857,
+      "tokens_per_1k_bytes": 141.13,
+      "encode_MB_per_s": 1.227,
+      "lossless": true,
+      "vocab": 1024,
+      "train_s": 9.34,
+      "merges": 768
+    },
+    "ada-full": {
+      "bytes": 58039,
+      "tokens": 8290,
+      "bytes_per_token": 7.0011,
+      "tokens_per_1k_bytes": 142.83,
+      "encode_MB_per_s": 1.176,
+      "lossless": true,
+      "vocab": 1024,
+      "train_s": 9.73,
+      "merges": 768
+    }
+  }
+}

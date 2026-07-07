@@ -1,0 +1,8 @@
+# Research pool — reproduced via scripts/fetch_pool.sh (not committed: 433MB repos + 20MB PDFs).
+best/
+papers/
+
+# Caches (bench_results.json IS committed as evidence — not ignored)
+**/__pycache__/
+*.pyc
+lab/**/ada.json
